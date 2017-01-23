@@ -15,6 +15,7 @@ var mainState = {
 		this.player = game.add.sprite(game.width/2, game.height-40, 'paddle');
 		this.player.anchor.setTo(0.5);
 		this.player.body.collideWorldBounds = true;
+		this.player.body.immovable = true;
 		this.left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 		this.right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 
@@ -24,10 +25,16 @@ var mainState = {
 		this.ball.body.collideWorldBounds = true;
 		this.ball.body.velocity.x = 300;
 		this.ball.body.velocity.y = 300;
+		this.ball.body.bounce.setTo(1);
 
 	},
 
 	update: function() {
+
+		game.physics.arcade.collide(this.player, this.ball);
+
+
+		// bouger le joueur
 		if (this.left.isDown) {
 			this.player.body.velocity.x = -300;
 		} else if (this.right.isDown) {
@@ -35,6 +42,8 @@ var mainState = {
 		} else {
 			this.player.body.velocity.x = 0;
 		}
+
+
 	}
 
 };
