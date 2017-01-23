@@ -10,6 +10,8 @@ var mainState = {
 		game.stage.backgroundColor = '#006534';
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.world.enableBody = true;
+		game.scale.pageAlignHorizontally = true;
+		game.scale.pageAlignVertically = true;
 
 		// player 1
 		this.player = game.add.sprite(game.width/2, game.height-40, 'paddle');
@@ -39,6 +41,7 @@ var mainState = {
 
 	update: function() {
 
+		// gestion colision et victoire
 		game.physics.arcade.collide([this.player, this.player2], this.ball);
 		if (this.ball.y > this.player.y + 20) this.reStart(2);
 		if (this.ball.y < this.player2.y - 20) this.reStart(1);
