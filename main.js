@@ -39,6 +39,10 @@ var mainState = {
 
 	update: function() {
 
+		game.physics.arcade.collide([this.player, this.player2], this.ball);
+		if (this.ball.y > this.player.y + 20) this.reStart(2);
+		if (this.ball.y < this.player2.y - 20) this.reStart(1);
+
 		// bouger le joueur 1
 		if (this.left.isDown) {
 			this.player.body.velocity.x = -300;
@@ -57,13 +61,11 @@ var mainState = {
 			this.player2.body.velocity.x = 0;
 		}
 
-		game.physics.arcade.collide(this.player, this.ball);
-		if (this.ball.y > this.player + 20) this.reStart();
 
 	},
 
-	reStart: function() {
-		alert('Perdu');
+	reStart: function(n) {
+		alert('Le joueur ' + n + ' a gagné');
 		game.state.start('main');
 	}
 
