@@ -11,13 +11,21 @@ var mainState = {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.world.enableBody = true;
 
-		// player
+		// player 1
 		this.player = game.add.sprite(game.width/2, game.height-40, 'paddle');
 		this.player.anchor.setTo(0.5);
 		this.player.body.collideWorldBounds = true;
 		this.player.body.immovable = true;
 		this.left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 		this.right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+
+		// player 2
+		this.player2 = game.add.sprite(game.width/2, 40, 'paddle');
+		this.player2.anchor.setTo(0.5);
+		this.player2.body.collideWorldBounds = true;
+		this.player2.body.immovable = true;
+		this.left2 = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+		this.right2 = game.input.keyboard.addKey(Phaser.Keyboard.D);
 
 		// ball
 		this.ball = game.add.sprite(game.width/2, game.height/2, 'ball');
@@ -31,10 +39,7 @@ var mainState = {
 
 	update: function() {
 
-		game.physics.arcade.collide(this.player, this.ball);
-
-
-		// bouger le joueur
+		// bouger le joueur 1
 		if (this.left.isDown) {
 			this.player.body.velocity.x = -300;
 		} else if (this.right.isDown) {
@@ -43,7 +48,23 @@ var mainState = {
 			this.player.body.velocity.x = 0;
 		}
 
+		// bouger le joueur 2
+		if (this.left2.isDown) {
+			this.player2.body.velocity.x = -300;
+		} else if (this.right2.isDown) {
+			this.player2.body.velocity.x = 300;
+		} else {
+			this.player2.body.velocity.x = 0;
+		}
 
+		game.physics.arcade.collide(this.player, this.ball);
+		if (this.ball.y > this.player + 20) this.reStart();
+
+	},
+
+	reStart: function() {
+		alert('Perdu');
+		game.state.start('main');
 	}
 
 };
